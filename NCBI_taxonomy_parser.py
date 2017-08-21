@@ -2,7 +2,7 @@
 #                               #
 #  NCBI_taxonomy_parser.py      #
 #  Akhil Garg, garga4@vcu.edu   #
-#  Updated 2017-03-17           #
+#  Updated 2017-08-20           #
 #                               #
 #################################
 
@@ -16,8 +16,11 @@ The script then outputs two files:
     1. current_name_taxa.txt
     2. RDB_like_taxa.txt
     
-Each of these files contains: the current reptile name, a list of synonyms for that name, and the tax id (if it exists)
-Both of these output files contain the same information, but in different formats
+Each of these files contains: 
+    * The current reptile name
+    * A list of synonyms for that name
+    * The tax id (if it exists)
+Both of these output files contain the same information, but in different formats.
 '''
 
 # Imports
