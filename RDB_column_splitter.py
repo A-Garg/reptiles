@@ -7,10 +7,15 @@
 #################################
 
 '''
-This script takes in the file reptile_database_names.txt by Peter Uetz.
-It outputs two files, synonym_list.txt and current_name_list.txt.
+A very simple column splitter for a two-column tab-delimited file.
 
-Each file contains one column from reptile_database_names.txt. 
+This script takes in the file reptile_database_names.txt by Peter Uetz.
+    reptile_database_names.txt is a tab-delimited file 
+    that maps reptile synonyms to their current species or subspecies name.
+
+The script outputs two files, synonym_list.txt and current_name_list.txt.
+    Each file contains one column from reptile_database_names.txt. 
+    The entries are sorted alphabetically and duplicates are removed.
 '''
 
 # For removing files so that new files can be created 
