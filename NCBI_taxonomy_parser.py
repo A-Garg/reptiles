@@ -7,6 +7,8 @@
 #################################
 
 '''
+A script to parse the output of the NCBI Taxonomy name/id Status Report Page.
+
 This script takes in three files: 
     1. reptile_database_names.txt (by Dr. Uetz)
     2. synonym_output.txt (output from https://www.ncbi.nlm.nih.gov/Taxonomy/TaxIdentifier/tax_identifier.cgi)
