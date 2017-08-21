@@ -2,17 +2,39 @@
 #                               #
 #  Taxonomy_tree.py             #
 #  Akhil Garg, garga4@vcu.edu   #
-#  Updated 2017-03-17           #
+#  Updated 2017-08-20           #
 #                               #
 #################################
 
 '''
-This script takes in the files
+This script takes all of the taxonomy data from NCBI, 
+    and finds species and subspecies that are listed as reptiles.
+    Using that information, it compares reptiles that are in 
+    NCBI's database to those that are in RDB.
+
+The script contains functions for handling NCBI taxonomy data, 
+    but the data must first be acquired manually, e.g. through their FTP server.
+    The data on the server is updated quite regularly 
+    (in the range of days-weeks).
+
+This script takes in the files:
     1. names.dmp (from taxdmp.zip from ftp://ftp.ncbi.nlm.nih.gov/pub/taxonomy/)
     2. nodes.dmp (from taxdmp.zip from ftp://ftp.ncbi.nlm.nih.gov/pub/taxonomy/)
     3. RDB_like_taxa.txt (from script NCBI_taxonomy_parser.py)
 
-Each file contains one column from reptile_database_names.txt. 
+It outputs four files:
+    1. NCBI_reptile_list.txt
+    2. NCBI_only_reptiles.txt
+    3. common_reptiles.txt
+    4. RDB_only_reptiles.txt
+    
+All of these files are tab/newline-separated. 
+    Each line contains the current reptile, a tab, followed by the taxid.
+    
+NCBI_reptile_list.txt contains all NCBI reptiles.
+NCBI_only_reptiles.txt contains reptiles in NCBI but not in RDB.
+common_reptiles.txt contains reptiles common to both NCBI and RDB.
+RDB_only_reptiles.txt contains reptiles that are in RDB but not NCBI.    
 '''
 
 from __future__ import print_function

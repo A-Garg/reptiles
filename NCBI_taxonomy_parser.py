@@ -2,11 +2,13 @@
 #                               #
 #  NCBI_taxonomy_parser.py      #
 #  Akhil Garg, garga4@vcu.edu   #
-#  Updated 2017-03-17           #
+#  Updated 2017-08-20           #
 #                               #
 #################################
 
 '''
+A script to parse the output of the NCBI Taxonomy name/id Status Report Page.
+
 This script takes in three files: 
     1. reptile_database_names.txt (by Dr. Uetz)
     2. synonym_output.txt (output from https://www.ncbi.nlm.nih.gov/Taxonomy/TaxIdentifier/tax_identifier.cgi)
@@ -16,8 +18,11 @@ The script then outputs two files:
     1. current_name_taxa.txt
     2. RDB_like_taxa.txt
     
-Each of these files contains: the current reptile name, a list of synonyms for that name, and the tax id (if it exists)
-Both of these output files contain the same information, but in different formats
+Each of these files contains: 
+    * The current reptile name
+    * A list of synonyms for that name
+    * The tax id (if it exists)
+Both of these output files contain the same information, but in different formats.
 '''
 
 # Imports
