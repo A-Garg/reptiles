@@ -29,12 +29,12 @@ You'll get four files as output:
 3. common_reptiles.txt
 4. RDB_only_reptiles.txt
     
-All of these files are tab/newline-separated. Each line contains the current reptile, a tab, followed by the taxid.
+All of these files are tab/newline-separated. Each line contains the current reptile, a tab, and the taxid.
     
-NCBI_reptile_list.txt contains all NCBI reptiles.
-NCBI_only_reptiles.txt contains reptiles in NCBI but not in RDB.
-common_reptiles.txt contains reptiles common to both NCBI and RDB.
-RDB_only_reptiles.txt contains reptiles that are in RDB but not NCBI.
+1. NCBI_reptile_list.txt contains all NCBI reptiles.
+2. NCBI_only_reptiles.txt contains reptiles in NCBI but not in RDB.
+3. common_reptiles.txt contains reptiles common to both NCBI and RDB.
+4. RDB_only_reptiles.txt contains reptiles that are in RDB but not NCBI.
 
 ## More documentation
 More documentation for each script is available in the first few lines of each script.
