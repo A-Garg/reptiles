@@ -2,7 +2,7 @@
 #                               #
 #  NCBI_taxonomy_parser.py      #
 #  Akhil Garg, garga4@vcu.edu   #
-#  Updated 2017-08-20           #
+#  Updated 2018-03-30           #
 #                               #
 #################################
 
@@ -10,7 +10,7 @@
 A script to parse the output of the NCBI Taxonomy name/id Status Report Page.
 
 This script takes in three files: 
-    1. reptile_database_names.txt (by Dr. Uetz)
+    1. reptile_database_names.txt (created by RDB_column_splitter.py)
     2. synonym_output.txt (output from https://www.ncbi.nlm.nih.gov/Taxonomy/TaxIdentifier/tax_identifier.cgi)
     3. current_name_output.txt (output from https://www.ncbi.nlm.nih.gov/Taxonomy/TaxIdentifier/tax_identifier.cgi)
     
@@ -35,11 +35,20 @@ reptiles = {}
 # Get reptile names from Uetz's file and put into dictionary
 with open("reptile_database_names.txt") as RDB:
     for line in RDB:
+        
+        # Skip the first header row
+        if line.strip() == "synonym	current_species_or_subspecies_name":
+            continue
+        
+        # There are a few lines that start with tabs, ignore these
+        if line.startswith("\t"): continue
+        
         # The first name before the tab is the synonym
         # The second is the current name
         line         = line.strip().split("\t")
         synonym      = line[0]
         current_name = line[1]
+        
         
         # Add to dictionary 
         
@@ -248,4 +257,3 @@ with open("RDB_like_taxa.txt", "w") as f:
             
             # Then move onto the next line
             f.write ("\n")
-            
