@@ -2,7 +2,7 @@
 #                               #
 #  Taxonomy_tree.py             #
 #  Akhil Garg, garga4@vcu.edu   #
-#  Updated 2017-08-20           #
+#  Updated 2018-03-30           #
 #                               #
 #################################
 
@@ -208,14 +208,14 @@ for tax_id in all_species:
     # Print a message every 100,000 lines
     if (species_processed % 100000 == 0):
          print ("Processing line " + str(species_processed) + "...")
-         print (str(float(species_processed)/len(all_species)*100) + "% complete.")
+         print (str(round(float(species_processed)/len(all_species)*100,2)) + "% complete.")
 
     # Check if the species is a reptile
     for reptile_family in reptile_taxids:
         if is_parent(tax_id, reptile_family):
             NCBI_reptile_species.append(tax_id)
 
-print ("100.00% complete.\n")            
+print ("100.0% complete.\n")            
 print (str(len(NCBI_reptile_species)) + " reptile species and subspecies collected.")
 
 # Write all of the NCBI reptile species and subspecies to file
@@ -302,8 +302,8 @@ print ("Done writing to file.\n")
 
 # Find reptiles that are in RDB but not in NCBI
 # This occurs when the 
-print ("Generating list of reptiles in RDB but not in NCBI \
-  and writing to 'RDB_only_reptiles.txt'")
+print ("Generating list of reptiles in RDB but not in NCBI\
+and writing to 'RDB_only_reptiles.txt'")
         
 # The difference between two sets gives elements in the first set that are not in the second 
 RDB_only_reptiles = set(RDB_taxid_list) - set(NCBI_reptile_species)
