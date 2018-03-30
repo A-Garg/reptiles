@@ -2,7 +2,7 @@
 #                               #
 #  RDB_column_splitter.py       #
 #  Akhil Garg, garga4@vcu.edu   #
-#  Updated 2017-03-17           #
+#  Updated 2018-03-30           #
 #                               #
 #################################
 
@@ -12,12 +12,15 @@ This script exists so that its two output files can be submitted to
     NCBI's Taxonomy name/id Status Report Page, which is located at
     https://www.ncbi.nlm.nih.gov/Taxonomy/TaxIdentifier/tax_identifier.cgi
 
-This script takes in the file reptile_database_names.txt by Peter Uetz.
-    reptile_database_names.txt is a tab-delimited file 
+This script takes in the file reptile_database_names_2018_03.txt by Peter Uetz.
+    reptile_database_names_2018_03.txt is a tab-delimited file 
     that maps reptile synonyms to their current species or subspecies name.
 
-The script outputs two files, synonym_list.txt and current_name_list.txt.
-    Each file contains one column from reptile_database_names.txt. 
+The script outputs three files:
+    reptile_database_names.txt, synonym_list.txt and current_name_list.txt.
+    reptile_database_names.txt is the same as the original, 
+        but with carriage returns replaced by newline characters.
+    The last two files contain one column from reptile_database_names.txt. 
     The entries are sorted alphabetically and duplicates are removed.
 '''
 
@@ -25,6 +28,19 @@ The script outputs two files, synonym_list.txt and current_name_list.txt.
 ### This is necessary because these files will appended to
 import os
 
+
+# Unix and Windows behave differently, including adding carriage returns
+# Replace these with newlines
+with open("reptile_database_names_2018_03.txt") as original_list:
+    filedata = original_list.read()
+
+filedata = filedata.replace("\r","\n")
+
+# Write the file out again
+with open('reptile_database_names.txt', 'w') as file:
+  file.write(filedata)
+  
+  
 # Get reptile names from reptile_database_names.txt and put into sets
 # I am using sets in order to remove duplicates
 with open("reptile_database_names.txt") as RDB:
@@ -32,6 +48,14 @@ with open("reptile_database_names.txt") as RDB:
     current_name_list = set()
     
     for line in RDB:
+
+        # Skip the first header row
+        if line.strip() == "synonym	current_species_or_subspecies_name":
+            continue
+            
+        # There are a few lines that start with tabs, ignore these
+        if line.startswith("\t"): continue
+        
         # The first name before the tab is the synonym
         # The second is the current name
         line         = line.strip().split("\t")
