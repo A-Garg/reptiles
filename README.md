@@ -2,10 +2,14 @@
 Compare which reptile species are available in [NCBI's Taxonomy Browser](https://www.ncbi.nlm.nih.gov/Taxonomy/taxonomyhome.html/) to those in the [Reptile Database](http://reptile-database.org/) (RDB).
 
 ## Usage
-The data from RDB is stored in `reptile_database_names.txt`. Follow these steps:
+The data from RDB is stored in `reptile_database_names_2018_03.txt`. This file name is currently hard-coded in the python scripts, if there is enough interest I can make this more flexible.
+
+Follow these steps:
 
 ### RDB_column_splitter.py
-The first thing to do is run `RDB_column_splitter.py` in the same folder as `reptile_database_names.txt`. This produces two files, `synonym_list.txt` and `current_name_list.txt`. 
+The first thing to do is run `RDB_column_splitter.py` in the same folder as `reptile_database_names_2018_03.txt`. If the data file is named differently, change this in line 34 of `RDB_column_splitter.py`.
+
+This script produces three files, `reptile_database_names.txt`, `synonym_list.txt` and `current_name_list.txt`. 
 
 ### NCBI's status for each reptile
 Take each of the output files from `RDB_column_splitter.py` and submit them to NCBI's [Taxonomy name/id Status Report Page](https://www.ncbi.nlm.nih.gov/Taxonomy/TaxIdentifier/tax_identifier.cgi). When submitting each file, be sure to check **full taxid lineage** beneath the form.
@@ -37,7 +41,7 @@ All of these files are tab/newline-separated. Each line contains the current rep
 4. RDB_only_reptiles.txt contains reptiles that are in RDB but not NCBI.
 
 ## More documentation
-More documentation for each script is available in the first few lines of each script.
+More documentation for each script is available in the first few lines of each script. For any questions, please email Akhil (email address written in scripts).
 
 ## Acknowledgements
 * Peter Uetz, for the idea.
