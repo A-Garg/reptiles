@@ -26,19 +26,23 @@ You can then run `Taxonomy_tree.py`.
 
 ### Output
 
-You'll get four files as output:
+You'll get five files as output:
 
 1. NCBI_reptile_list.txt
 2. NCBI_only_reptiles.txt
 3. common_reptiles.txt
 4. RDB_only_reptiles.txt
+5. RDB_nonreptiles.txt
+
     
-All of these files are tab/newline-separated. Each line contains the current reptile, a tab, and the taxid.
+Each of these files is tab/newline-separated. Each line contains the current reptile, a tab, and the taxid, except for `RDB_only_reptiles.txt` which doesn't contain taxids.
     
 1. NCBI_reptile_list.txt contains all NCBI reptiles.
 2. NCBI_only_reptiles.txt contains reptiles in NCBI but not in RDB.
 3. common_reptiles.txt contains reptiles common to both NCBI and RDB.
-4. RDB_only_reptiles.txt contains reptiles that are in RDB but not NCBI.
+4. RDB_only_reptiles.txt contains reptiles that are in RDB but not NCBI. There is no associated taxid.
+5. RDB_nonreptiles.txt contains reptiles from RDB that aren't classfied as reptiles in NCBI.
+
 
 ## More documentation
 More documentation for each script is available in the first few lines of each script. For any questions, please email Akhil (email address written in scripts).
