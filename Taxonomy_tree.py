@@ -2,7 +2,7 @@
 #                               #
 #  Taxonomy_tree.py             #
 #  Akhil Garg, garga4@vcu.edu   #
-#  Updated 2018-03-30           #
+#  Updated 2018-04-05           #
 #                               #
 #################################
 
@@ -20,21 +20,25 @@ The script contains functions for handling NCBI taxonomy data,
 This script takes in the files:
     1. names.dmp (from taxdmp.zip from ftp://ftp.ncbi.nlm.nih.gov/pub/taxonomy/)
     2. nodes.dmp (from taxdmp.zip from ftp://ftp.ncbi.nlm.nih.gov/pub/taxonomy/)
-    3. RDB_like_taxa.txt (from script NCBI_taxonomy_parser.py)
+    3. current_name_taxa.txt (from script NCBI_taxonomy_parser.py)
 
-It outputs four files:
+It outputs five files:
     1. NCBI_reptile_list.txt
     2. NCBI_only_reptiles.txt
     3. common_reptiles.txt
     4. RDB_only_reptiles.txt
+    5. RDB_nonreptiles.txt
     
-All of these files are tab/newline-separated. 
+The first four of these files are tab/newline-separated. 
     Each line contains the current reptile, a tab, followed by the taxid.
+The 5th file is simply a list (without the taxid).
     
 NCBI_reptile_list.txt contains all NCBI reptiles.
 NCBI_only_reptiles.txt contains reptiles in NCBI but not in RDB.
 common_reptiles.txt contains reptiles common to both NCBI and RDB.
-RDB_only_reptiles.txt contains reptiles that are in RDB but not NCBI.    
+RDB_only_reptiles.txt contains reptiles that are in RDB but not NCBI.
+RDB_nonreptiles.txt contains reptiles that are in RDB but are not classified
+    as reptiles in NCBI.
 '''
 
 from __future__ import print_function
@@ -223,10 +227,10 @@ print ("Writing them to NCBI_reptile_list.txt...")
 
 with open("NCBI_reptile_list.txt", "w") as f:
     f.write("Scientific name\tTax ID\n")
-    for reptile in NCBI_reptile_species:
-        f.write(taxid_scientificname[reptile])
+    for reptile_taxid in NCBI_reptile_species:
+        f.write(taxid_scientificname[reptile_taxid])
         f.write("\t")
-        f.write(str(reptile))
+        f.write(str(reptile_taxid))
         f.write("\n")
 
 print ("Done writing to file.")
@@ -235,22 +239,23 @@ print ("Done writing to file.")
 
 print ("\nGetting list of RDB tax ids...")
 
-RDB_taxid_list = []
+RDB_taxid_list   = []
+RDB_notaxid_list = []
 
-# Note we could also easily use current_name_taxa.txt as the input file
-with open("RDB_like_taxa.txt") as f:
+with open("current_name_taxa.txt") as f:
     for line in f:
         
         # Ignore the first line
-        if line == "Synonym	current_species_or_subspecies_name	Tax ID	Notes\n":
+        if line == "Name given to NCBI (current name)	List of synonyms	Tax ID	Notes\n":
             continue
             
         # Parse line
         line   = line.strip().split("\t")
+        current_name = line[0]
         tax_id = line[2]
         
 
-        if tax_id == "no tax id": continue
+        if tax_id == "no tax id": RDB_notaxid_list.append(current_name)
         else: RDB_taxid_list.append(int(tax_id))
 
 print ("Done.\n")
@@ -300,21 +305,32 @@ with open("common_reptiles.txt", "w") as f:
         
 print ("Done writing to file.\n")
 
-# Find reptiles that are in RDB but not in NCBI
-# This occurs when the 
+# Find reptiles that are in RDB but not NCBI (reptiles without a taxid)
 print ("Generating list of reptiles in RDB but not in NCBI\
 and writing to 'RDB_only_reptiles.txt'")
-        
-# The difference between two sets gives elements in the first set that are not in the second 
-RDB_only_reptiles = set(RDB_taxid_list) - set(NCBI_reptile_species)
-
-print ("There are " + str(len(RDB_only_reptiles)) + " tax ids in RDB but not NCBI.")
-
-RDB_only_reptiles = sorted(list(RDB_only_reptiles))
+print ("There are " + str(len(RDB_notaxid_list)) + " reptiles in RDB but not NCBI.")
 
 with open("RDB_only_reptiles.txt", "w") as f:
+    for reptile in RDB_notaxid_list:
+        f.write(reptile + "\n")
+        
+print ("Done writing to file.\n")
+
+# Find reptiles that are in RDB but not classified as reptiles in NCBI
+print ("Generating list of reptiles in RDB but not classified as reptiles in NCBI\
+and writing to RDB_nonreptiles.txt")
+        
+# The difference between two sets gives elements in the first set that are not in the second 
+RDB_nonreptiles = set(RDB_taxid_list) - set(NCBI_reptile_species)
+
+print ("There are " + str(len(RDB_nonreptiles)) + 
+    " reptiles in RDB that are not classfied as reptiles in NCBI.")
+
+RDB_nonreptiles = sorted(list(RDB_nonreptiles))
+
+with open("RDB_nonreptiles.txt", "w") as f:
     f.write("Scientific name\tTax ID\n")
-    for reptile in RDB_only_reptiles:
+    for reptile in RDB_nonreptiles:
         f.write(taxid_scientificname[reptile])
         f.write("\t")
         f.write(str(reptile))
