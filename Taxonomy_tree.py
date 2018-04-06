@@ -306,7 +306,7 @@ with open("common_reptiles.txt", "w") as f:
 print ("Done writing to file.\n")
 
 # Find reptiles that are in RDB but not NCBI (reptiles without a taxid)
-print ("Generating list of reptiles in RDB but not in NCBI\
+print ("Generating list of reptiles in RDB but not in NCBI \
 and writing to 'RDB_only_reptiles.txt'")
 print ("There are " + str(len(RDB_notaxid_list)) + " reptiles in RDB but not NCBI.")
 
@@ -317,7 +317,7 @@ with open("RDB_only_reptiles.txt", "w") as f:
 print ("Done writing to file.\n")
 
 # Find reptiles that are in RDB but not classified as reptiles in NCBI
-print ("Generating list of reptiles in RDB but not classified as reptiles in NCBI\
+print ("Generating list of reptiles in RDB but not classified as reptiles in NCBI \
 and writing to RDB_nonreptiles.txt")
         
 # The difference between two sets gives elements in the first set that are not in the second 
