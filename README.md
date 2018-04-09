@@ -20,7 +20,7 @@ Save the output files as `synonym_output.txt` and `current_name_output.txt`, res
 Run `NCBI_taxonomy_parser.py`. This script will parse through `synonym_output.txt` and `current_name_output.txt` to produce `current_name_taxa.txt` and `RDB_like_taxa.txt`, which will be useful for the next script.
 
 ### Taxonomy_tree.py
-Before running this script, download NCBI's taxonomy data. This can be done via their [FTP server](https://ftp.ncbi.nlm.nih.gov/pub/taxonomy/). Download `taxdmp.zip`, unzip it, and keep `names.dmp` and `nodes.dmp`.
+Before running this script, download NCBI's taxonomy data. This can be done via their [FTP server](https://ftp.ncbi.nlm.nih.gov/pub/taxonomy/). Download `taxdmp.zip`, unzip it, and keep `names.dmp` and `nodes.dmp`. This should ideally be done on the same day as the above steps, since otherwise the Taxonomy name/id Status Report and the NCBI taxonomy data would be out of sync, which would cause an error in this script.
 
 You can then run `Taxonomy_tree.py`.
 
