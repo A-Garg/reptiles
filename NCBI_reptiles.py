@@ -247,13 +247,13 @@ print ("Done writing to file.\n")
 RDB_cn_species = set()
 RDB_synonyms   = set()
 
-with open('reptile_database_names_2018-07-17.txt') as f:
+with open('reptile_database_names.txt') as f:
     for line in f:
     
         line = line.strip()
         
         # Ignore the header row
-        if line == 'any_name\tcurrent_name': continue
+        if line == 'synonym	current_species_or_subspecies_name': continue
         
         line = line.split('\t')
         RDB_synonyms.add(line[0])
@@ -352,7 +352,7 @@ print('Others: {NCBI_only_tot} - {subtot} = {others}'.format(NCBI_only_tot = len
 
 
 # Initialize worksheets
-workbook = xlsxwriter.Workbook('July 2018 reptile comparison.xlsx')
+workbook = xlsxwriter.Workbook('Reptile comparison.xlsx')
 RDB_only_worksheet  = workbook.add_worksheet('RDB_only')
 common_worksheet    = workbook.add_worksheet('common')
 NCBI_only_worksheet = workbook.add_worksheet('NCBI_only')
