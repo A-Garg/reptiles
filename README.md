@@ -16,12 +16,12 @@ Follow these steps:
 
 ### Console output
 
-Counts of:
+The console will output counts of:
 * reptiles in RDB but not NCBI
 * reptiles in both RDB and NCBI
 * reptiles in NCBI but not RDB
 
-Within species that are in NCBI but not RDB, it additionally counts:
+Within species that are in NCBI but not RDB, it additionally prints counts of:
 * species labeled "aff.", "cf.", or "sp."
 * hybrid species
 * species that contain numerical digits
@@ -36,7 +36,7 @@ Two new files are created.
 
 
 ## Questions?
-For any questions, please email Akhil (email address written in scripts).
+For any questions, please email Akhil (email address written at top of `NCBI_reptiles.py`).
 
 ## Acknowledgements
 * Peter Uetz, for the idea.
