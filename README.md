@@ -34,6 +34,10 @@ Two new files are created.
 * `NCBI_reptile_list.txt`: a list of NCBI reptile species and their taxonomy ids.
 * `Reptile comparison.xlsx`: an Excel workbook containing separate worksheets with lists of reptiles. The worksheets correspond to the counts outputted to the console.
 
+### Technical notes
+
+* The script only looks for NCBI reptile species, not subspecies. When comparing NCBI species with RDB, the script only chooses RDB species that are from the current name column, and that are binomials (two words). Otherwise, the RDB species is classified as a synonym.
+* None of these categories overlap: "aff.", "cf.", "sp.", hybrid, numbered, synonym. If there is a reptile that is in two of the previous categories, it enters only the highest category according to the following rank: synonym > "aff." = "cf." = "sp." = hybrid > numbered.
 
 ## Questions?
 For any questions, please email Akhil (email address written at top of `NCBI_reptiles.py`).
