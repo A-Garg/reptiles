@@ -5,12 +5,14 @@ Compare which reptile species are available in [NCBI's Taxonomy Browser](https:/
 - [Usage](#usage)
 - [Input details](#input-details)
 - [Output details](#output-details)
+- [Technical notes](#technical-notes)
 - [Questions?](#questions)
 - [Acknowledgements](#acknowledgements)
 
 
 ## Purpose
-(To be written)
+The Reptile Database (RDB) primarily classifies species based on morphology, whereas NCBI primarily classifies species based on genetic sequencing. We sought to examine the similarities and differences between these two databases. In the case of discrepancies, we classify them in order to help with resolving and preventing these discrepancies in the future.
+
 
 ## Usage
 
@@ -50,13 +52,14 @@ Within species that are in NCBI but not RDB, it additionally prints counts of:
 
 Two new files are created.
 
-* `NCBI_reptile_list.txt`: a list of NCBI reptile species and their taxonomy ids.
-* `Reptile comparison.xlsx`: an Excel workbook containing separate worksheets with lists of reptiles. The worksheets correspond to the counts outputted to the console. There are three worksheets:
+* `NCBI_reptile_list.txt`: a list of NCBI reptile species names and their taxonomy ids.
+* `reptile_comparison.xlsx`: an Excel workbook containing separate worksheets with lists of reptiles. There are three worksheets:
   * `RDB_only` is a list of reptile names in RDB but not NCBI.
   * `common` is a list of reptile names in both RDB and NCBI. It includes each reptile's NCBI taxonomy ID.
   * `NCBI_only` is a list of reptile names in NCBI but not RDB. It includes each reptile's NCBI taxonomy ID. It additionally adds a third column for "kin", i.e. if the reptile name is one of the special categories from the console output ([see above](#console-output)). Finally, if the NCBI species matches only a synonym in RDB, the fourth column matches the current name associated with the synonym in RDB.
+An example of `reptile_comparison.txt` is included in this repository.
 
-### Technical notes
+## Technical notes
 
 * The script only looks for NCBI reptile species, not subspecies. When comparing NCBI species with RDB, the script only chooses RDB species that are from the current name column, and that are binomials (two words). Otherwise, the RDB species is classified as a synonym.
 * None of these categories overlap: "aff.", "cf.", "sp.", hybrid, numbered, synonym. If there is a reptile that is in two of the previous categories, it enters only the highest category according to the following rank: synonym > "aff." = "cf." = "sp." = hybrid > numbered.
@@ -65,5 +68,5 @@ Two new files are created.
 For any questions, please email Akhil (email address written at top of `NCBI_reptiles.py`).
 
 ## Acknowledgements
-* Peter Uetz, for the idea.
-* Detlef Leipe, for help with sorting through NCBI's database.
+* Peter Uetz, for the idea and with fixing errors.
+* Detlef Leipe, for help with sorting through NCBI's database and with fixing errors.
