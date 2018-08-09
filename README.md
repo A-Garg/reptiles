@@ -1,11 +1,16 @@
 # reptiles
 Compare which reptile species are available in [NCBI's Taxonomy Browser](https://www.ncbi.nlm.nih.gov/Taxonomy/taxonomyhome.html/) to those in the [Reptile Database](http://reptile-database.org/) (RDB).
 
+## Purpose
+(To be written)
+
 ## Usage
+
+To run the script, you need [Python 2.7](https://www.python.org/download/releases/2.7/), the [re](https://docs.python.org/2/library/re.html) module (installed by default), and the [xlsxwriter](https://xlsxwriter.readthedocs.io/) module.
 
 Follow these steps:
 
-1. Have the RDB data ready in a tab-delimited file called `reptile_database_names.txt`. This file should have two columns, with a header row of `synonym\tcurrent_species_or_subspecies_name`. 
+1. Have the RDB data ready in a tab-delimited file called `reptile_database_names.txt`. This file should have two columns, with a header row of `any_name\tcurrent_name`. 
 
 2. Download NCBI's taxonomy data. This can be done via their [FTP server](https://ftp.ncbi.nlm.nih.gov/pub/taxonomy/). Download `taxdmp.zip`, unzip it, and keep `names.dmp` and `nodes.dmp`. 
 
