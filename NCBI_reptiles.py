@@ -2,7 +2,7 @@
 #                               #
 #  NCBI_reptiles.py             #
 #  Akhil Garg, garga4@vcu.edu   #
-#  Updated 2018-07-19           #
+#  Updated 2018-08-08           #
 #                               #
 #################################
 
@@ -16,7 +16,7 @@ This script takes in 3 files:
     2. nodes.dmp (from taxdmp.zip from ftp://ftp.ncbi.nlm.nih.gov/pub/taxonomy/)
     3. reptile_database_names.txt from RDB
 
-It outputs the file NCBI_reptile_list.txt, plus some counts about the data.
+It outputs the file reptile comparison.xlsx, plus some counts about the data.
 '''
 
 
@@ -253,7 +253,7 @@ with open('reptile_database_names.txt') as f:
         line = line.strip()
         
         # Ignore the header row
-        if line == 'synonym	current_species_or_subspecies_name': continue
+        if line == 'any_name\tcurrent_name': continue
         
         line = line.split('\t')
         RDB_synonyms.add(line[0])
@@ -306,12 +306,14 @@ sp       = []
 numbered = []
 synonym  = []
 
+# List of NCBI only reptile "kins" that are not numbered
 not_number_list = ["aff.", "cf.", " x ", "sp."]
 
 for name in NCBI_only_species:
 
     # Check for synonym in RDB
-    # If found, break out of the loop and don't count it as one of the others
+    # If found, break out of the loop and don't count it as one of the others,
+    # instead count it as a synonym
     if name in RDB_synonyms:
         synonym.append(name)
         continue
@@ -328,6 +330,8 @@ for name in NCBI_only_species:
     if not any([x in name for x in not_number_list]) and re.search(".*\d+.*", name):
         numbered.append(name)
 
+# Count number of reptiles that fit into these special "kin" categories
+# For use later for counts of various categories        
 subtotal = len(aff) + len(cf) + len(hybrid) + len(sp) + len(numbered) + len(synonym)
         
 print("Number of aff.:        {:5d}".format(len(aff)))
@@ -352,30 +356,23 @@ print('Others: {NCBI_only_tot} - {subtot} = {others}'.format(NCBI_only_tot = len
 
 
 # Initialize worksheets
-workbook = xlsxwriter.Workbook('Reptile comparison.xlsx')
+workbook = xlsxwriter.Workbook('reptile_comparison.xlsx')
 RDB_only_worksheet  = workbook.add_worksheet('RDB_only')
 common_worksheet    = workbook.add_worksheet('common')
 NCBI_only_worksheet = workbook.add_worksheet('NCBI_only')
-
-aff_worksheet      = workbook.add_worksheet('aff')
-cf_worksheet       = workbook.add_worksheet('cf')
-hybrid_worksheet   = workbook.add_worksheet('hybrid')
-sp_worksheet       = workbook.add_worksheet('sp')
-numbered_worksheet = workbook.add_worksheet('numbered')
-synonym_worksheet  = workbook.add_worksheet('synonyms')
 
 
 # Write reptiles to worksheet
 
 # Write header rows for each worksheet
-# RDB only worksheet has a different header from the others
-RDB_only_worksheet.write(0,0,'reptile_name')
+RDB_only_worksheet.write (0,0,'reptile_name')
 
-for ws in [common_worksheet, NCBI_only_worksheet,
-           aff_worksheet, cf_worksheet, hybrid_worksheet,
-           sp_worksheet, numbered_worksheet, synonym_worksheet]:
-    ws.write(0,0,'reptile_name')
-    ws.write(0,1,'tax_id')
+common_worksheet.write   (0,0,'reptile_name')
+common_worksheet.write   (0,1,'tax_id')
+
+NCBI_only_worksheet.write(0,0,'reptile_name')
+NCBI_only_worksheet.write(0,1,'tax_id')
+NCBI_only_worksheet.write(0,2,'kin')
 
 
 # Now write reptiles to worksheets
@@ -384,47 +381,30 @@ for reptile in RDB_only_species:
     RDB_only_worksheet.write(row, 0, reptile)
     row += 1
 row = 1
+
 for reptile in common_species:
     common_worksheet.write(row, 0, reptile)
     common_worksheet.write(row, 1, name_taxid[reptile])
     row += 1
 row = 1
+
 for reptile in NCBI_only_species:
     NCBI_only_worksheet.write(row, 0, reptile)
     NCBI_only_worksheet.write(row, 1, name_taxid[reptile])
+    # Add a third column for special kin designations
+    if reptile in aff:
+        NCBI_only_worksheet.write(row, 2, 'aff')
+    if reptile in cf:
+        NCBI_only_worksheet.write(row, 2, 'cf')
+    if reptile in hybrid:
+        NCBI_only_worksheet.write(row, 2, 'hybrid')
+    if reptile in sp:
+        NCBI_only_worksheet.write(row, 2, 'sp')
+    if reptile in numbered:
+        NCBI_only_worksheet.write(row, 2, 'numbered')  
+    if reptile in synonym:
+        NCBI_only_worksheet.write(row, 2, 'synonym')        
     row += 1
-
-row = 1
-for reptile in sorted(aff):
-    aff_worksheet.write(row, 0, reptile)
-    aff_worksheet.write(row, 1, name_taxid[reptile])
-    row += 1    
-row = 1
-for reptile in sorted(cf):
-    cf_worksheet.write(row, 0, reptile)
-    cf_worksheet.write(row, 1, name_taxid[reptile])
-    row += 1     
-row = 1
-for reptile in sorted(hybrid):
-    hybrid_worksheet.write(row, 0, reptile)
-    hybrid_worksheet.write(row, 1, name_taxid[reptile])
-    row += 1      
-row = 1
-for reptile in sorted(sp):
-    sp_worksheet.write(row, 0, reptile)
-    sp_worksheet.write(row, 1, name_taxid[reptile])
-    row += 1      
-row = 1
-for reptile in sorted(numbered):
-    numbered_worksheet.write(row, 0, reptile)
-    numbered_worksheet.write(row, 1, name_taxid[reptile])
-    row += 1      
-row = 1
-for reptile in sorted(synonym):
-    synonym_worksheet.write(row, 0, reptile)
-    synonym_worksheet.write(row, 1, name_taxid[reptile])
-    row += 1      
-    
 
     
 workbook.close()
