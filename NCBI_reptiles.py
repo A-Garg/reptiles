@@ -16,7 +16,13 @@ This script takes in 3 files:
     2. nodes.dmp (from taxdmp.zip from ftp://ftp.ncbi.nlm.nih.gov/pub/taxonomy/)
     3. reptile_database_names.txt from RDB
 
-It outputs the file reptile comparison.xlsx, plus some counts about the data.
+It outputs 2 files: NCBI_reptile_list.txt and reptile_comparison.xlsx, 
+    plus some counts about the data.
+    
+    NCBI_reptile_list.txt: a list of NCBI reptile species and their taxonomy ids.
+    reptile_comparison.xlsx: an Excel workbook containing separate worksheets with
+                             lists of reptiles. The worksheets correspond to the 
+                             counts outputted to the console.
 '''
 
 
@@ -244,8 +250,10 @@ print ("Done writing to file.\n")
 
 
 # cn means current name
-RDB_cn_species = set()
-RDB_synonyms   = set()
+RDB_cn_species  = set()
+RDB_synonyms    = set()
+# Dictionary to map synonyms to current names
+RDB_syn_cn_dict = {}
 
 with open('reptile_database_names.txt') as f:
     for line in f:
@@ -262,11 +270,18 @@ with open('reptile_database_names.txt') as f:
         # Some synonym columns are blank, and these can be ignored
         # Blank columns will generate an IndexError
         try:
-            if line[1].count(' ') == 1: RDB_cn_species.add(line[1])
+            if line[1].count(' ') == 1: 
+                RDB_cn_species.add(line[1])
             # Add trinomials and such to synonyms
             else: RDB_synonyms.add(line[1])
+            
+            # Map synonym to current name 
+            # (even if current name isn't a binomial)
+            RDB_syn_cn_dict[line[0]] = line[1]
+
         except IndexError:
             continue
+        
         
 
         
@@ -373,6 +388,8 @@ common_worksheet.write   (0,1,'tax_id')
 NCBI_only_worksheet.write(0,0,'reptile_name')
 NCBI_only_worksheet.write(0,1,'tax_id')
 NCBI_only_worksheet.write(0,2,'kin')
+NCBI_only_worksheet.write(0,3,'synonym')
+
 
 
 # Now write reptiles to worksheets
@@ -403,7 +420,8 @@ for reptile in NCBI_only_species:
     if reptile in numbered:
         NCBI_only_worksheet.write(row, 2, 'numbered')  
     if reptile in synonym:
-        NCBI_only_worksheet.write(row, 2, 'synonym')        
+        NCBI_only_worksheet.write(row, 2, 'synonym')       
+        NCBI_only_worksheet.write(row, 3, RDB_syn_cn_dict[reptile])        
     row += 1
 
     
