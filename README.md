@@ -30,6 +30,8 @@ Follow these steps:
 
 There are 3 input files. One is from RDB and the other two are from NCBI.
 * `reptile_database_names.txt` is a tab-delimited file consisting of two columns. The left column contains reptile synonyms, and the right column contains the associated current reptile names. The header row should be `any_name\tcurrent_name\n`. The file from July 2018 is included in this repository.
+  * _"current reptile name"_ in this context refers to names that RDB considers to the primary, scientific name
+  * _"reptile synonym"_ in this context refers to names that RDB considers to be a secondary name. Each synonym is associated with a current reptile name.
 * `names.dmp` maps NCBI taxonomy IDs to their scientific names
 * `nodes.dmp` maps NCBI taxonomy IDs to their parent taxonomy IDs and their rank (e.g. species, phylum)
 
