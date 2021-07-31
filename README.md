@@ -1,5 +1,5 @@
 # reptiles
-Compare which reptile species are available in [NCBI's Taxonomy Browser](https://www.ncbi.nlm.nih.gov/Taxonomy/taxonomyhome.html/) to those in the [Reptile Database](http://reptile-database.org/) (RDB).
+Compare which reptile species are available in [NCBI's Taxonomy Browser](https://www.ncbi.nlm.nih.gov/Taxonomy/taxonomyhome.html/) to those in the [Reptile Database](http://reptile-database.org/) (RDB). Initial results are published in *[Nature Communications](https://www.nature.com/articles/545412c)*, and final results are published in *[Zootaxa](https://www.mapress.com/zt/article/view/zootaxa.4706.3.1)*.
 
 - [Purpose](#purpose)
 - [Usage](#usage)
@@ -67,7 +67,7 @@ An example of `reptile_comparison.txt` is included in this repository.
 * None of these categories overlap: "aff.", "cf.", "sp.", hybrid, numbered, synonym. If there is a reptile that is in two of the previous categories, it enters only the highest category according to the following rank: synonym > "aff." = "cf." = "sp." = hybrid > numbered.
 
 ## Questions?
-For any questions, please email Akhil (email address written at top of `NCBI_reptiles.py`).
+For any questions, please [email Akhil](mailto:akhil@akhilgarg.ca).
 
 ## Acknowledgements
 * Peter Uetz, for the idea and with fixing errors.
